@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.vercel/
+.env*
+!.env.example
+outputs/
+private/
+*.tsbuildinfo
+*.log
+.agents/
+.claude/
+.codex/
+skills-lock.json
+
+.vercel
+.env*

@@ -1,0 +1,12 @@
+import{database}from'../server/db.js';
+import{validateTournament}from'../lib/tournament';
+import{writeFile}from'node:fs/promises';
+const source=process.env.SOURCE_TOURNAMENT_URL;if(!source)throw new Error('Supply the source tournament URL.');
+const r=await fetch(source);if(!r.ok)throw new Error('Could not read the existing tournament.');
+const current=await r.json() as {tournament:unknown;revision:number};const tournament=validateTournament(current.tournament);
+const sql=database(),owner=await sql`SELECT count(*)::int AS count FROM owner_account`;
+if(owner[0].count)throw new Error('The new owner is already active. Import through the owner desk instead.');
+await writeFile('private/tournament-before-move.json',JSON.stringify(current,null,2));
+const result=await sql`UPDATE tournament SET data=${JSON.stringify(tournament)}::jsonb,updated_at=now() WHERE id=1 AND revision=0 RETURNING revision`;
+if(!result.length)throw new Error('The replacement competition has been edited. Import through the owner desk instead.');
+console.log(`Preserved ${Object.keys(tournament.scores).length} league scores and ${Object.keys(tournament.playoffs).length} knockout results. No owner accounts were copied.`);
