@@ -1,0 +1,10 @@
+import {writeFile} from 'node:fs/promises';
+import {database} from '../server/db';
+import {digest} from '../server/security';
+const sql=database();const existing=await sql`SELECT datname FROM pg_database WHERE datname='tanvir_ovi_test'`;
+if(!existing.length)await sql`CREATE DATABASE tanvir_ovi_test`;
+const url=new URL(process.env.DATABASE_URL!);url.pathname='/tanvir_ovi_test';url.searchParams.delete('options');
+process.env.DATABASE_URL=url.toString();
+await import('./setup-database');
+await writeFile('.env.test.local',`DATABASE_URL=${JSON.stringify(url.toString())}\nOWNER_EMAIL=tanvirovi6@gmail.com\nOWNER_SETUP_TOKEN_HASH=${digest('local-test-activation-token')}\nPUBLIC_ORIGIN=http://127.0.0.1:5173\n`);
+console.log('Isolated test database configured. Production owner remains unactivated.');
