@@ -1,8 +1,8 @@
-# Tanbirobi · eFootball League
+# tanvir-ovi · eFootball League
 
-**Owner:** Tanbirobi — tanvirovi6@gmail.com  
-**Website:** https://tanvir-ovi.github.io/tanbirobi/  
-**Repository:** https://github.com/tanvir-ovi/tanbirobi
+**Owner:** tanvir-ovi — tanvirovi6@gmail.com  
+**Website:** https://tanvir-ovi.github.io/tanvir-ovi-league/  
+**Repository:** https://github.com/tanvir-ovi/tanvir-ovi-league
 
 Eight contenders, 28 league fixtures, automatic standings, seeded semifinals, penalty decisions and a championship final. Public visitors can view results; only the configured owner can change them.
 
